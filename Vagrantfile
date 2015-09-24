@@ -38,6 +38,7 @@ Vagrant.configure(2) do |config|
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
   config.vm.synced_folder "app", "/var/www"
+  config.vm.synced_folder "cfg", "/cfg"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -66,6 +67,12 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
      sudo apt-get update
-     sudo apt-get install -y apache2 php5 lynx
+     sudo apt-get install -y apache2 php5 curl git
+     cd /cfg
+     curl -sS https://getcomposer.org/installer | php
+     mv composer.phar /usr/local/bin/composer
+     composer update
+     cp apache.cfg /etc/apache2/sites-available/default
+     apachectl restart
   SHELL
 end
