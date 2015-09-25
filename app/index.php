@@ -3,7 +3,7 @@ require_once '/cfg/vendor/autoload.php';
 
 use Silex\Application;
 use Silex\Provider;
-
+use Symfony\Component\HttpFoundation\Response;
 
 # -- service providers  ----------------------------------------
 
@@ -30,13 +30,17 @@ $app->get('/', function() {
     return "Hello World!";
 
 })->before(function ($request, $app) {
-    return new Symfony\Component\HttpFoundation\Response(
-      $app['twig']->render('login.twig'));
+    return new Response($app['twig']->render('login.twig'));
 });
 
 $app->get('/hello/{name}', function ($name) use($app) {
     return $app['twig']->render('hello.twig',
 				array('name' => $name, ));
+});
+
+
+$app->error(function (\Exception $e, $code) {
+    return new Response("<h1>internal error</h1> ".$e['message']);
 });
 
 $app->run();
