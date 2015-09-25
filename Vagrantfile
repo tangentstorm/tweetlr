@@ -66,13 +66,18 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
+     debconf-set-selections <<< 'mysql-server mysql-server/root_password password xxx'
+     debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password xxx'
      sudo apt-get update
-     sudo apt-get install -y apache2 php5 curl git
-     cd /cfg
-     curl -sS https://getcomposer.org/installer | php
-     mv composer.phar /usr/local/bin/composer
-     composer update
-     cp apache.cfg /etc/apache2/sites-available/default
+     sudo apt-get install -y apache2 php5 curl git mysql-server mysql-client
+     mysql -u root -pxxx < /cfg/create-db.sql
+     if [ ! -x /usr/local/bin/composer ]; then
+       cd /tmp
+       curl -sS https://getcomposer.org/installer | php
+       mv composer.phar /usr/local/bin/composer
+     fi
+     cd /cfg; composer update
+     cp /cfg/apache.cfg /etc/apache2/sites-available/default
      apachectl restart
   SHELL
 end

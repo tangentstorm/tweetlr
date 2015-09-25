@@ -1,10 +1,30 @@
 <?php
 require_once '/cfg/vendor/autoload.php';
 
-$app = new Silex\Application();
-$app->register(new Silex\Provider\TwigServiceProvider(),
+use Silex\Application;
+use Silex\Provider;
+
+
+# -- service providers  ----------------------------------------
+
+$app = new Application();
+$app->register(new Provider\DoctrineServiceProvider());
+$app->register(new Provider\TwigServiceProvider(),
 	       array('twig.path' => __DIR__.'/views'));
 
+
+# -- configuration ---------------------------------------------
+
+$app['db.options'] = array(
+    'driver' => 'pdo_mysql',
+    'host' => 'localhost',
+    'dbname' => 'tweetlr',
+    'user' => 'tweetlr',
+    'password' => 'tweetlr' # NIST.gov super security protocol 732-b :)
+);
+
+
+# -- controllers -----------------------------------------------
 
 $app->get('/', function() {
     return "Hello World!";
