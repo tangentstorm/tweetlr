@@ -4,6 +4,7 @@ require_once '/cfg/vendor/autoload.php';
 use Silex\Application;
 use Silex\Provider;
 use Symfony\Component\HttpFoundation\Response;
+use Tweetlr\UserProvider;
 
 # -- service providers  ----------------------------------------
 
@@ -11,14 +12,11 @@ $app = new Application();
 $app->register(new Provider\DoctrineServiceProvider());
 $app->register(new Provider\SecurityServiceProvider());
 $app->register(new Provider\SessionServiceProvider());
-#$app->register(new Provider\RememberMeServiceProvider());
+$app->register(new Provider\RememberMeServiceProvider());
 
 $app->register(new Provider\UrlGeneratorServiceProvider());
 $app->register(new Provider\TwigServiceProvider(),
                array('twig.path' => __DIR__.'/views'));
-
-$simpleUser = new SimpleUser\UserServiceProvider();
-$app->register($simpleUser);
 
 
 # -- configuration ---------------------------------------------
@@ -33,20 +31,27 @@ $app['db.options'] = array(
 
 $app['security.firewalls'] = array(
   'secured' => array(
-  'pattern' => '^/my/',
-  'users' => $app->share(function($app) { return $app['user.manager']; }),
-));
+    'pattern' => '^/hello/.*$',
+    'form' => array( 'login_path'=> '/login', 'check_path' => 'login_check'),
+    'users' => $app->share(function() use ($app) {
+        return new UserProvider($app['db']);
+     }),
+  )
+);
 
 
 # -- controllers -----------------------------------------------
 
 $app->get('/', function() {
   return "Hello World!";
-})->before(function ($request, $app) {
+  });
+
+
+$app->get("/login", function () use ($app) {
   return new Response($app['twig']->render('login.twig'));
 });
 
-$app->get('/hello/{name}', function ($name) use($app) {
+$app->get('/hello/{name}', function ($name) use ($app) {
   return $app['twig']->render('hello.twig',
                               array('name' => $name, ));
 });
