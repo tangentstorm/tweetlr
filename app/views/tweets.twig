@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tweetlr: Recent Tweets</title>
+    <link rel="stylesheet" href="/styles.css"/>
+  </head>
+  <body>
+    <h1>Recent Tweets</h1>
+
+    <div id="tweets">
+    {% for t in tweets %}
+      <p><author>{{ t.username }}</author> {{ t.tweet }}</p>
+    {% endfor %}
+    </div>
+
+  </body>
+</html>

@@ -1,0 +1,20 @@
+html {
+    background: #333;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body { 
+    font-family: verdana, arial, helvetica, sans;
+    width: 600px;
+    margin: auto;
+    margin-top: 0;
+    background: #fff;
+    padding: 10px;
+}
+
+#tweets p author {
+   display: block;
+   font-weight: bold;
+}

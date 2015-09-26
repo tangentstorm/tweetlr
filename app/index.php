@@ -42,18 +42,14 @@ $app['security.firewalls'] = array(
 
 # -- controllers -----------------------------------------------
 
-$app->get('/', function() {
-  return "Hello World!";
-});
-
+$app->get('/', 'Tweetlr\TweetController::recent');
 
 $app->get("/login", function () use ($app) {
   return new Response($app['twig']->render('login.twig'));
 });
 
 $app->get('/hello/{name}', function ($name) use ($app) {
-  return $app['twig']->render('hello.twig',
-                              array('name' => $name, ));
+  return $app['twig']->render('hello.twig', array('name' => $name, ));
 });
 
 
