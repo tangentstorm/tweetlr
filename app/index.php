@@ -44,7 +44,7 @@ $app['security.firewalls'] = array(
 
 $app->get('/', function() {
   return "Hello World!";
-  });
+});
 
 
 $app->get("/login", function () use ($app) {
