@@ -4,15 +4,15 @@ grant all on tweetlr.* to 'tweetlr'@'localhost' identified by 'tweetlr';
 use tweetlr;
 
 create table if not exists users (
-   id integer not null auto_increment primary key,
-   username varchar(32),
-   passhash char(32)
+   uid integer not null auto_increment primary key,
+   username varchar(32) not null unique,
+   passhash char(32) not null
 );
 
 create table if not exists tweets (
-  id integer not null auto_increment primary key,
-  user_id integer not null references users.id,
-  tweet varchar(140)
+  tid integer not null auto_increment primary key,
+  uid integer not null references users.id,
+  tweet varchar(140) not null
 );
 
 
@@ -32,3 +32,9 @@ replace into tweets values
   ( 6, 2, 'If you tell the truth, you don''t have to remember anything.'),
   ( 7, 3, 'If I didn''t care for fun and such, I''d probably amount to much. But I shall stay the way I am, because I do not give a damn.'),
   ( 8, 4, 'The secret of life is honesty and fair dealing. If you can fake that, you''ve got it made.');
+
+
+create or replace view recent as
+  select tid, u.username, t.tweet
+  from tweets t left join users u on t.uid = u.uid
+  order by tid desc;
