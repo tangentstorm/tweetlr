@@ -68,8 +68,9 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
      debconf-set-selections <<< 'mysql-server mysql-server/root_password password xxx'
      debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password xxx'
-     sudo apt-get update
-     sudo apt-get install -y apache2 php5 curl git mysql-server mysql-client
+     apt-get update
+     apt-get install -y apache2 php5 curl git mysql-server mysql-client
+     apt-get install -y php5-mysql
      mysql -u root -pxxx < /cfg/create-db.sql
      if [ ! -x /usr/local/bin/composer ]; then
        cd /tmp
