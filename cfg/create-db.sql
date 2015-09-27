@@ -18,11 +18,12 @@ create table if not exists tweets (
 
 replace into users values
   (1, 'admin', md5('admin')),
-  (2, 'samc', md5('Abner')),
+  (2, 'samuel', md5('Abner')),
   (3, 'dparker', md5('alg0nqu1n')),
   (4, 'groucho', md5('10021890')),
   (5, 'nancy', md5('viscountess79')),
-  (6, 'winston', md5('bulldog'));
+  (6, 'winston', md5('bulldog')),
+  (7, 'feynman', md5('123qed'));;
 
 replace into tweets values
   ( 1, 2, 'Do the right thing. It will gratify some people and astonish the rest.'),
@@ -35,8 +36,9 @@ replace into tweets values
   ( 8, 4, 'The secret of life is honesty and fair dealing. If you can fake that, you''ve got it made.'),
   ( 9, 5, 'The penalty for success is to be bored by the people that used to snub you.'),
   (10, 6, 'If you''re going through hell, keep going.'),
-  (11, 5, '@winston, if you were my husband, I''d put poison in your tea.'),
-  (12, 6, '@nancy, if you were my wife, I would drink it.');
+  (11, 5, '@winston, if you were my husband, I''d poison your tea.'),
+  (12, 6, '@nancy, if you were my wife, I would drink it.'),
+  (13, 7, 'The first principle is that you must not fool yourself, and you are the easiest person to fool.');
 
 
 create or replace view recent as
