@@ -1,17 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Tweetlr: {{ title }}</title>
-    <link rel="stylesheet" href="/styles.css"/>
-  </head>
-  <body>
-    <h1>{{ title }}</h1>
+<head>
+  <title>Tweetlr: {{ title }}</title>
+  <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+
+  <header>
+    <h1>tweetlr</h1>
+    <nav>
+       <span id="logged-in">logged in as
+               <a href="/by/guest">@guest</a>
+             | <a href="/logout">log out</a>
+       </span>
+       <span id="logged-out"><a href="/login">log in</a></span>
+    </nav>
+  </header>
+
+  <div id="main">
+    <form>
+      <textarea name="tweet" placeholder="tweet yo self."></textarea>
+      <span id="charcount">140</span>
+      <input type="submit" value="tweet"/>
+    </form>
+
+    <h2>{{ title }}</h2>
 
     <div id="tweets">
     {% for t in tweets %}
       <p><author>{{ t.username }}</author> {{ t.tweet | linkify }}</p>
     {% endfor %}
     </div>
+  </div>
 
-  </body>
+</body>
 </html>

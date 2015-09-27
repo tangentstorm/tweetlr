@@ -3,32 +3,117 @@ html {
   height: 100%;
 }
 
-body { 
+body, textarea, input {
   font-family: arial, verdana, helvetica, sans-serif;
   font-size: 10pt;
-  background: #eee;
-  margin: auto;
+}
+
+body {
   width: 600px;
+  margin: auto;
+}
+
+header, #main {
   padding: 10px;
   box-shadow: 10px 10px 5px #222;
   border-radius: 5px;
 }
 
+header {
+  position: relative;
+  margin-top: 5px;
+  background: #000;
+  color: #fff;
+}
+
+#main{
+  margin-top: 10px;
+  background: #eee;
+}
+
+
 h1 {
+  font-family: impact;
+  font-weight: normal;
+  margin: 0;
+}
+
+h2 {
   font-family: georgia, serif;
 }
 
-#tweets p {
+h3 {
+  color: #999;
+  font-style: italic;
+  font-weight: normal;
+}
+
+textarea, #tweets p {
   background: #fff;
   padding-bottom: 1ex;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+#tweets p {
   box-shadow: 5px 5px 2px #ddd;
+}
+
+#tweets p author {
+  display: block;
+  margin-bottom: 0.5ex;
+  font-weight: bold;
+}
+
+#tweets a {
+  color: #36c;
+  text-decoration: none;
+}
+
+#tweets a:hover {
+  color: #36c;
+  text-decoration: underline;
+}
+
+nav {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+nav a {
+  color: gold;
+  text-decoration: none;
+}
+
+#logged-in {
+  display: none;
+}
+
+form {
+  background: #ccf;
+  padding: 5px;
+  border-radius: 5px;
+  text-align: right;
+}
+
+#charcount {
+  color: #66c;
+}
+
+input[type="submit"] {
+  margin: 5px;
+  border: none;
+  background: #66c;
+  color: #fff;
   padding: 5px;
   border-radius: 5px;
 }
 
 
-#tweets p author {
-   display: block;
-   margin-bottom: 0.5ex;
-   font-weight: bold;
+textarea {
+  border: solid silver 1px;
+  width: 550px;
+  display: block;
+  margin: 0 auto;
 }
