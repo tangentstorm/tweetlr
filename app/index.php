@@ -40,6 +40,19 @@ $app['security.firewalls'] = array(
 );
 
 
+# -- template filters  -----------------------------------------
+
+$app['twig'] = $app->extend("twig", function ($twig, $app) {
+
+  # convert '@name' into a hyperlink
+  $twig->addFilter(new Twig_SimpleFilter('linkify', function($str) {
+    $s = preg_replace('/@(\w+)/', '<a href="/by/$1">@$1</a>', $str);
+    return $s;
+  }, array('is_safe'=>array('html'))));
+
+  return $twig;
+});
+
 # -- controllers -----------------------------------------------
 
 $app->get('/', 'Tweetlr\TweetController::recent');
@@ -47,6 +60,8 @@ $app->get('/', 'Tweetlr\TweetController::recent');
 $app->get("/login", function () use ($app) {
   return new Response($app['twig']->render('login.twig'));
 });
+
+$app->get('/by/{username}', 'Tweetlr\TweetController::by');
 
 $app->get('/hello/{name}', function ($name) use ($app) {
   return $app['twig']->render('hello.twig', array('name' => $name, ));
