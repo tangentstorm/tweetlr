@@ -53,6 +53,7 @@ $app['twig'] = $app->extend("twig", function ($twig, $app) {
   return $twig;
 });
 
+
 # -- controllers -----------------------------------------------
 
 $app->get('/', 'Tweetlr\TweetController::recent');
@@ -62,11 +63,6 @@ $app->get("/login", function () use ($app) {
 });
 
 $app->get('/by/{username}', 'Tweetlr\TweetController::by');
-
-$app->get('/hello/{name}', function ($name) use ($app) {
-  return $app['twig']->render('hello.twig', array('name' => $name, ));
-});
-
 
 $app->error(function (\Exception $e, $code) {
   return new Response("<h1>internal error</h1> ".$e->getMessage());
