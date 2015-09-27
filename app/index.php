@@ -4,7 +4,6 @@ require_once '/cfg/vendor/autoload.php';
 use Silex\Application;
 use Silex\Provider;
 use Symfony\Component\HttpFoundation\Response;
-use Tweetlr\UserProvider;
 
 # -- service providers  ----------------------------------------
 
@@ -31,14 +30,16 @@ $app['db.options'] = array(
 
 $app['security.firewalls'] = array(
   'secured' => array(
-    'pattern' => '^/hello/.*$',
-    'form' => array( 'login_path'=> '/login', 'check_path' => 'login_check'),
-    'users' => $app->share(function() use ($app) {
-        return new UserProvider($app['db']);
-     }),
-  )
-);
-
+    'pattern' => '^/(tweet|login_check)',
+    'form' => array(
+      'login_path'=> '/login',
+      'check_path' => '/login_check'
+    ),
+    'users' => array(
+      'tweetlr' => array('ROLE_ADMIN', // raw password is 'passwd'
+      'WYkjFCuxeN3HvMJxcUZZABj2dC9yqAKoMZZyUB3jldh3m7/KDhFUY61IZcQOgvNLJrytSnV6VYts6GO6bnu6Zw==')
+    )
+));
 
 # -- template filters  -----------------------------------------
 
@@ -60,12 +61,25 @@ $app->get('/', 'Tweetlr\TweetController::recent');
 
 $app->get('/by/{username}', 'Tweetlr\TweetController::by');
 
-$app->get("/login", function () use ($app) {
-  return new Response($app['twig']->render('login.twig'));
+$app->get('/login', 'Tweetlr\SecurityController::login');
+
+$app->get("/tweet", function () use ($app) {
+  return "TODO: actually post tweets";
 });
 
+
+# -- development helpers ---------------------------------------
+
+// password encoder
+$app->get("/encode/{passwd}", function ($passwd) use ($app) {
+    return $app['security.encoder.digest']->encodePassword($passwd, '');
+});
+
+// render clean error messages on exception
 $app->error(function (\Exception $e, $code) {
   return new Response("<h1>internal error</h1> ".$e->getMessage());
 });
+
+
 
 $app->run();

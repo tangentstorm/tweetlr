@@ -13,18 +13,21 @@
     <h1>tweetlr</h1>
   </header>
   <div id="main">
+    {% if error %}
+      <div>{{ error }}</div>
+    {% endif %}
     <h2>please log in</h2>
-    <form>
+    <form method="post" action="/login_check">
       <fieldgroup>
-	<label for="username">username:</label>
+	<label for="_username">username:</label>
 	<br/>
-	<input name="username" type="text" disabled/>
+	<input name="_username" type="text"/>
 	<br/>
-	<label for="password">password:</label>
+	<label for="_password">password:</label>
 	<br/>
-	<input name="password" type="password" disabled/>
+	<input name="_password" type="password"/>
       </fieldgroup>
-      <button disabled>submit</button>
+      <button>submit</button>
     </form>
   </div>
 </body>
