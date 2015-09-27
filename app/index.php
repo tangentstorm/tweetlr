@@ -58,11 +58,11 @@ $app['twig'] = $app->extend("twig", function ($twig, $app) {
 
 $app->get('/', 'Tweetlr\TweetController::recent');
 
+$app->get('/by/{username}', 'Tweetlr\TweetController::by');
+
 $app->get("/login", function () use ($app) {
   return new Response($app['twig']->render('login.twig'));
 });
-
-$app->get('/by/{username}', 'Tweetlr\TweetController::by');
 
 $app->error(function (\Exception $e, $code) {
   return new Response("<h1>internal error</h1> ".$e->getMessage());
