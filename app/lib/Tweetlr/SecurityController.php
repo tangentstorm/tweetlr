@@ -15,4 +15,13 @@ class SecurityController {
       'error'         => $app['security.last_error']($request),
     ));
   }
+
+  public function currentUsername(Application $app) {
+
+    if ($app['security.authorization_checker']
+	  ->isGranted('IS_AUTHENTICATED_FULLY')) {
+      return $app['security.token_storage']->getToken()->getUsername();
+    } else return "anon";
+  }
+
 }

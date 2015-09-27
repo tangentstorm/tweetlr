@@ -9,16 +9,14 @@
   <header>
     <h1>tweetlr</h1>
     <nav>
-       <span id="logged-in">logged in as
-               <a href="/by/guest">@guest</a>
-             | <a href="/logout">log out</a>
-       </span>
-       <span id="logged-out"><a href="/login">log in</a></span>
+      logged in as <a href="/by/{{ username }}">@{{ username }}</a>
+      | <a href="/logout">log out</a>
     </nav>
   </header>
 
   <div id="main">
-    <form>
+
+    <form method="post" action="/tweet">
       <textarea name="tweet" placeholder="tweet yo self."></textarea>
       <span id="charcount">140</span>
       <input type="submit" value="tweet"/>
