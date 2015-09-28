@@ -16,7 +16,7 @@ $app->register(new Provider\RememberMeServiceProvider());
 $app->register(new Provider\UrlGeneratorServiceProvider());
 $app->register(new Provider\TwigServiceProvider(),
                array('twig.path' => __DIR__.'/views'));
-$app->register(new Tweetlr\UserServiceProvider());
+
 
 # -- configuration ---------------------------------------------
 
@@ -28,9 +28,8 @@ $app['db.options'] = array(
   'password' => 'tweetlr' # NIST.gov super security protocol 732-b :)
 );
 
-$app['tweets'] = $app->share(function() use ($app) {
-  return new Tweetlr\TweetService($app['db']);
-});
+
+# -- security  -------------------------------------------------
 
 # !! I think you're meant to define the user list with ['security.providers']
 # if you want to reuse it in multiple areas, but but the format is much more
@@ -63,6 +62,7 @@ $app['security.firewalls'] = array(
   'elsewhere' => array('anonymous' => true, 'users' => $users)
 );
 
+
 # -- template filters  -----------------------------------------
 
 $app['twig'] = $app->extend("twig", function ($twig, $app) {
@@ -77,17 +77,15 @@ $app['twig'] = $app->extend("twig", function ($twig, $app) {
 });
 
 
-# -- controllers -----------------------------------------------
+# -- mount main app ------------------------------------------
 
-$app->get('/', 'Tweetlr\TweetController::recent');
+$app->register(new Tweetlr\UserServiceProvider());
 
-$app->get('/by/{username}', 'Tweetlr\TweetController::by');
-
-$app->get('/login', 'Tweetlr\SecurityController::login');
-
-$app->get("/tweet", function () use ($app) {
-  return "TODO: actually post tweets";
+$app['tweets'] = $app->share(function() use ($app) {
+    return new Tweetlr\TweetService($app['db']);
 });
+
+$app->mount('/', new Tweetlr\TweetControllerProvider());
 
 
 # -- development helpers ---------------------------------------
