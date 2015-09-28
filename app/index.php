@@ -28,6 +28,13 @@ $app['db.options'] = array(
   'password' => 'tweetlr' # NIST.gov super security protocol 732-b :)
 );
 
+$app['tweets'] = $app->share(function() use ($app) {
+  return new Tweetlr\TweetService($app['db']);
+});
+
+# !! I think you're meant to define the user list with ['security.providers']
+# if you want to reuse it in multiple areas, but but the format is much more
+# cumbersome than just doing it this way.
 $users = array(
   'tweetlr' => array('ROLE_ADMIN', // raw password is 'passwd'
      'WYkjFCuxeN3HvMJxcUZZABj2dC9yqAKoMZZyUB3jldh3m7/KDhFUY61IZcQOgvNLJrytSnV6VYts6GO6bnu6Zw==')
