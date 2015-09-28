@@ -10,8 +10,8 @@ class TweetController {
   private function _render($app, $title, $tweets) {
     return $app['twig']->render('tweets.twig', array(
       'title' => $title,
-      'logged_in'=> $app['security']->isGranted('IS_FULLY_AUTHENTICATED'),
-      'username'=> $app['security']->getToken()->getUser(),
+      'logged_in'=> $app['user.logged_in'],
+      'username'=> $app['user.name'],
       'tweets' => $tweets));
   }
 

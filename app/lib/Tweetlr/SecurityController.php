@@ -16,12 +16,4 @@ class SecurityController {
     ));
   }
 
-  public function currentUsername(Application $app) {
-
-    if ($app['security.authorization_checker']
-	  ->isGranted('IS_AUTHENTICATED_FULLY')) {
-      return $app['security.token_storage']->getToken()->getUsername();
-    } else return "anon";
-  }
-
 }

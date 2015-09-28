@@ -16,7 +16,7 @@ $app->register(new Provider\RememberMeServiceProvider());
 $app->register(new Provider\UrlGeneratorServiceProvider());
 $app->register(new Provider\TwigServiceProvider(),
                array('twig.path' => __DIR__.'/views'));
-
+$app->register(new Tweetlr\UserServiceProvider());
 
 # -- configuration ---------------------------------------------
 
@@ -100,7 +100,9 @@ $app->get("/encode/{passwd}", function ($passwd) use ($app) {
 // show authenticated username.
 # !! sadly, this is always 'anon', even if the user is logged in.
 # (though it works fine if you add 'whoami' to the firewall pattern)
-$app->get("/whoami", 'Tweetlr\SecurityController::currentUsername');
+$app->get("/whoami", function () use ($app) {
+  return $app['user.name'];
+});
 
 // render clean error messages on exception
 $app->error(function (\Exception $e, $code) {
