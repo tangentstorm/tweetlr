@@ -14,7 +14,7 @@ Tweetlr is supplied as a [[http://vagrantup.com/][vagrant]] appliance, so once y
 
 : vagrant up
 
-Then just point your browser at http://localhost:8080/
+Then just point your browser at [[http://localhost:8080/][http://localhost:8080/]]
 
 To log in:
 
