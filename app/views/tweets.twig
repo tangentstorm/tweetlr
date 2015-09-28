@@ -3,6 +3,29 @@
 <head>
   <title>Tweetlr: {{ title }}</title>
   <link rel="stylesheet" href="/styles.css"/>
+  <script type="text/javascript">
+
+    var el = document.getElementById.bind(document);
+
+    function charCount() {
+      return el("tweet").value.length;
+    }
+
+    function updateCounter() {
+      el("chars-left").innerHTML = 140 - charCount();
+      el("submit-btn").disabled = charCount() < 1;
+    }
+
+    window.onload = function() {
+      var box = el("tweet");
+      box.onkeyup = box.onchange = box.oncut = box.onpaste = updateCounter;
+      updateCounter(); // in case of unsubmitted text after a page refresh
+      window.onsubmit = function() {
+        return charCount() > 0; // prevent submiting empty tweets
+      }
+    }
+
+  </script>
 </head>
 <body>
 
@@ -16,10 +39,11 @@
 
   <div id="main">
 
-    <form method="post" action="/tweet">
-      <textarea name="tweet" placeholder="tweet yo self."></textarea>
-      <span id="charcount">140</span>
-      <input type="submit" value="tweet"/>
+    <form id="form" method="post" action="/tweet">
+      <textarea id="tweet" name="tweet" placeholder="tweet yo self."
+        maxlength="140"></textarea>
+      <span id="chars-left">140</span>
+      <input id="submit-btn" type="submit" value="tweet"/>
     </form>
 
     <h2>{{ title }}</h2>

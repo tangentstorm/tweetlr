@@ -97,7 +97,7 @@ form {
   text-align: right;
 }
 
-#charcount {
+#chars-left {
   color: #66c;
 }
 
@@ -108,6 +108,11 @@ input[type="submit"] {
   color: #fff;
   padding: 5px;
   border-radius: 5px;
+  font-weight:bold;
+}
+
+input[disabled] {
+  color: #88e;
 }
 
 textarea {

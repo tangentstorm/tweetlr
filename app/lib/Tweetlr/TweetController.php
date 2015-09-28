@@ -27,7 +27,10 @@ class TweetController {
   }
 
   public function tweet(Request $req, Application $app) {
-    $app['tweets']->create($req->get('tweet'));
+    # the client should have ensured the tweet is between 1 and 140
+    # characters, but force it here, just in case:
+    $tweet = substr($req->get('tweet'), 0, 140);
+    if (strlen($tweet) > 0) $app['tweets']->create($tweet);
     return $app->redirect('/');
   }
 
