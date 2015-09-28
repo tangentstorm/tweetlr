@@ -26,4 +26,9 @@ class TweetController {
 			  $app['tweets']->by($username));
   }
 
+  public function tweet(Request $req, Application $app) {
+    $app['tweets']->create($req->get('tweet'));
+    return $app->redirect('/');
+  }
+
 }

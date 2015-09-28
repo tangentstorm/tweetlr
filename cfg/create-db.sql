@@ -17,7 +17,9 @@ create table if not exists tweets (
 
 
 replace into users values
-  (1, 'admin', md5('admin')),
+  -- !! note that these passwords aren't actually used at the moment,
+  --    since the goal was just to build a single-user application.
+  (1, 'tweetlr', md5('yay4tweetz')),
   (2, 'samuel', md5('Abner')),
   (3, 'dparker', md5('alg0nqu1n')),
   (4, 'groucho', md5('10021890')),

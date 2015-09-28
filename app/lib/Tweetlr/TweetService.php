@@ -19,4 +19,10 @@ class TweetService {
 			       array($username));
   }
 
+  public function create($tweet) {
+    $this->db->insert('tweets', array(
+      'uid' => 1, # hard coded since this is meant to be a single-user app
+      'tweet' => $tweet ));
+  }
+
 }

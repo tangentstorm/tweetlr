@@ -12,15 +12,10 @@ class TweetControllerProvider implements ControllerProviderInterface {
     $cf = $app['controllers_factory'];
     
     $cf->get('/', 'Tweetlr\TweetController::recent');
-    
+    $cf->post("/tweet", 'Tweetlr\TweetController::tweet');
     $cf->get('/by/{username}', 'Tweetlr\TweetController::by');
-    
     $cf->get('/login', 'Tweetlr\SecurityController::login');
-    
-    $cf->get("/tweet", function () use ($app) {
-	return "TODO: actually post tweets";
-    });
-    
+
     return $cf;
 
   }
